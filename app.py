@@ -1,11 +1,34 @@
 import os
 import openai
+import boto3
 from flask import Flask, render_template, request, jsonify
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
+AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY')
+AWS_SECRET_KEY = os.getenv('AWS_SECRET_KEY')
+AWS_REGION = os.getenv('AWS_REGION')
+SES_SENDER_EMAIL = os.getenv('SES_SENDER_EMAIL')
+
+ses_client = boto3.client('ses',
+                          aws_access_key_id=AWS_ACCESS_KEY,
+                          aws_secret_access_key=AWS_SECRET_KEY,
+                          region_name=AWS_REGION)
+
 openai.api_key = os.getenv('OPENAI_API_KEY')
+
+def send_email(recipient_email, summary):
+    response = ses_client.send_email(
+        Source=SES_SENDER_EMAIL,
+        Destination={'ToAddresses': [recipient_email]},
+        Message={
+            'Subject': {'Data': 'Your Summarized Transcription'},
+            'Body': {
+                'Text': {'Data': summary}
+            }
+        }
+    )
 
 def read_transcription(file_path):
     with open(file_path, 'r') as f:
@@ -52,8 +75,11 @@ def upload_file():
         file.save(file_path)
         transcription_text = read_transcription(file_path)
         summary = summarize_text(transcription_text)
+        send_email(email, summary)
         # Placeholder for processing
-        return jsonify({'success': True, 'summary': summary})
+        return jsonify({'success': True, 'message': 'Summary emailed successfully'})
+    
+        # return jsonify({'success': True, 'summary': summary})
     else:
         return jsonify({'success': False, 'error': 'Invalid file type'})
 
