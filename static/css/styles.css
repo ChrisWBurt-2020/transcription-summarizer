@@ -1,48 +1,123 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Roboto', sans-serif; /* Modern font */
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.container {
-    width: 400px;
-    margin: 100px auto;
+/* .container {
+    max-width: 500px; 
+    margin: 20px;
     padding: 20px;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+} */
+
+.container:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adds depth effect */
 }
 
 h1 {
     text-align: center;
+    color: #333;
+    font-size: 24px;
+}
+h2 {
+    text-align: center;
+    color: #555; /* A softer color to complement the bold main heading */
+    font-size: 18px;
+    font-weight: 300; /* Lighter weight for contrast with the main heading */
+    margin-top: 10px;
+    margin-bottom: 20px;
+    letter-spacing: 1px; /* Adds a subtle spacing for a clean appearance */
+    line-height: 1.5;
+    padding: 0 20px; /* Adds padding to prevent text from touching the edges */
 }
 
+
 label {
+    font-weight: bold;
+    color: #666;
+    margin-top: 10px;
     display: block;
-    margin-top: 15px;
 }
 
 input[type="file"],
 input[type="email"] {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
 }
 
 button {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-top: 20px;
-    background: #28a745;
+    background: #007bff;
     border: none;
     color: #fff;
+    font-size: 16px;
     cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background: #218838;
+    background-color: #0056b3;
 }
 
 #message {
     margin-top: 20px;
     text-align: center;
+    font-size: 14px;
+    color: #333;
+}
+
+/* particles-js */
+/* Particle.js container */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Ensures the particles are behind the content */
+    background-color: #1a1a1a; /* Dark background for contrast */
+    background-size: cover;
+}
+
+/* Ensure container is above particles */
+.container {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.9); /* Slight transparency for effect */
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+
+/* Responsive design for mobile */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
 }
